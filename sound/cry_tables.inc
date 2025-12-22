@@ -65,6 +65,10 @@ gCryTable::
 .endif @ P_GEN_2_CROSS_EVOS
 	cry Cry_Pikachu
 	cry Cry_Raichu
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_RaichuMegaX
+	cry Cry_RaichuMegaY
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_PIKACHU
 .if P_FAMILY_SANDSHREW == TRUE
 	cry Cry_Sandshrew
@@ -986,12 +990,18 @@ gCryTable::
 	cry Cry_Chingling
 .endif @ P_GEN_4_CROSS_EVOS
 	cry Cry_Chimecho
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_ChimechoMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CHIMECHO
 .if P_FAMILY_ABSOL == TRUE
 	cry Cry_Absol
 .if P_MEGA_EVOLUTIONS == TRUE
 	cry Cry_AbsolMega
 .endif @ P_MEGA_EVOLUTIONS
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_AbsolMegaZ
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ABSOL
 .if P_FAMILY_SNORUNT == TRUE
 	cry Cry_Snorunt
@@ -1099,6 +1109,9 @@ gCryTable::
 	cry Cry_Starly
 	cry Cry_Staravia
 	cry Cry_Staraptor
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_StaraptorMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_STARLY
 .if P_FAMILY_BIDOOF == TRUE
 	cry Cry_Bidoof
@@ -1188,6 +1201,9 @@ gCryTable::
 .if P_MEGA_EVOLUTIONS == TRUE
 	cry Cry_LucarioMega
 .endif @ P_MEGA_EVOLUTIONS
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_LucarioMegaZ
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_RIOLU
 .if P_FAMILY_HIPPOPOTAS == TRUE
 	cry Cry_Hippopotas
@@ -1235,6 +1251,9 @@ gCryTable::
 .endif @ P_FAMILY_PALKIA
 .if P_FAMILY_HEATRAN == TRUE
 	cry Cry_Heatran
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_HeatranMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_HEATRAN
 .if P_FAMILY_REGIGIGAS == TRUE
 	cry Cry_Regigigas
@@ -1251,6 +1270,9 @@ gCryTable::
 .endif @ P_FAMILY_MANAPHY
 .if P_FAMILY_DARKRAI == TRUE
 	cry Cry_Darkrai
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_DarkraiMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_DARKRAI
 .if P_FAMILY_SHAYMIN == TRUE
 	cry Cry_ShayminLand
@@ -1521,6 +1543,9 @@ gCryTable::
 .if P_FAMILY_GOLETT == TRUE
 	cry Cry_Golett
 	cry Cry_Golurk
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_GolurkMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_GOLETT
 .if P_FAMILY_PAWNIARD == TRUE
 	cry Cry_Pawniard
@@ -1651,6 +1676,9 @@ gCryTable::
 .if P_FAMILY_ESPURR == TRUE
 	cry Cry_Espurr
 	cry Cry_Meowstic
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_MeowsticMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ESPURR
 .if P_FAMILY_HONEDGE == TRUE
 	cry Cry_Honedge
@@ -1784,6 +1812,9 @@ gCryTable::
 .if P_FAMILY_CRABRAWLER == TRUE
 	cry Cry_Crabrawler
 	cry Cry_Crabominable
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_CrabominableMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CRABRAWLER
 .if P_FAMILY_ORICORIO == TRUE
 	cry Cry_OricorioBaile
@@ -1850,6 +1881,9 @@ gCryTable::
 .if P_FAMILY_WIMPOD == TRUE
 	cry Cry_Wimpod
 	cry Cry_Golisopod
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_GolisopodMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_WIMPOD
 .if P_FAMILY_SANDYGAST == TRUE
 	cry Cry_Sandygast
@@ -1942,6 +1976,9 @@ gCryTable::
 .endif @ P_FAMILY_NECROZMA
 .if P_FAMILY_MAGEARNA == TRUE
 	cry Cry_Magearna
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_MagearnaMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_MAGEARNA
 .if P_FAMILY_MARSHADOW == TRUE
 	cry Cry_Marshadow
@@ -1958,6 +1995,9 @@ gCryTable::
 .endif @ P_FAMILY_BLACEPHALON
 .if P_FAMILY_ZERAORA == TRUE
 	cry Cry_Zeraora
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_ZeraoraMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ZERAORA
 .if P_FAMILY_MELTAN == TRUE
 	cry Cry_Meltan
@@ -2253,6 +2293,9 @@ gCryTable::
 .if P_FAMILY_CAPSAKID == TRUE
 	cry Cry_Capsakid
 	cry Cry_Scovillain
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_ScovillainMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CAPSAKID
 .if P_FAMILY_RELLOR == TRUE
 	cry Cry_Rellor
@@ -2292,6 +2335,9 @@ gCryTable::
 .if P_FAMILY_GLIMMET == TRUE
 	cry Cry_Glimmet
 	cry Cry_Glimmora
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_GlimmoraMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_GLIMMET
 .if P_FAMILY_GREAVARD == TRUE
 	cry Cry_Greavard
@@ -2314,6 +2360,9 @@ gCryTable::
 	cry Cry_TatsugiriCurly
 	cry Cry_TatsugiriDroopy
 	cry Cry_TatsugiriStretchy
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_TatsugiriMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_TATSUGIRI
 .if P_FAMILY_GREAT_TUSK == TRUE
 	cry Cry_GreatTusk
@@ -2355,6 +2404,9 @@ gCryTable::
 	cry Cry_Frigibax
 	cry Cry_Arctibax
 	cry Cry_Baxcalibur
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry Cry_BaxcaliburMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_FRIGIBAX
 .if P_FAMILY_GIMMIGHOUL == TRUE
 	cry Cry_Gimmighoul
@@ -2493,6 +2545,10 @@ gCryTable_Reverse::
 .endif @ P_GEN_2_CROSS_EVOS
 	cry_reverse Cry_Pikachu
 	cry_reverse Cry_Raichu
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_RaichuMegaX
+	cry_reverse Cry_RaichuMegaY
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_PIKACHU
 .if P_FAMILY_SANDSHREW == TRUE
 	cry_reverse Cry_Sandshrew
@@ -3414,12 +3470,18 @@ gCryTable_Reverse::
 	cry_reverse Cry_Chingling
 .endif @ P_GEN_4_CROSS_EVOS
 	cry_reverse Cry_Chimecho
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_ChimechoMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CHIMECHO
 .if P_FAMILY_ABSOL == TRUE
 	cry_reverse Cry_Absol
 .if P_MEGA_EVOLUTIONS == TRUE
 	cry_reverse Cry_AbsolMega
 .endif @ P_MEGA_EVOLUTIONS
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_AbsolMegaZ
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ABSOL
 .if P_FAMILY_SNORUNT == TRUE
 	cry_reverse Cry_Snorunt
@@ -3527,6 +3589,9 @@ gCryTable_Reverse::
 	cry_reverse Cry_Starly
 	cry_reverse Cry_Staravia
 	cry_reverse Cry_Staraptor
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_StaraptorMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_STARLY
 .if P_FAMILY_BIDOOF == TRUE
 	cry_reverse Cry_Bidoof
@@ -3616,6 +3681,9 @@ gCryTable_Reverse::
 .if P_MEGA_EVOLUTIONS == TRUE
 	cry_reverse Cry_LucarioMega
 .endif @ P_MEGA_EVOLUTIONS
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_LucarioMegaZ
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_RIOLU
 .if P_FAMILY_HIPPOPOTAS == TRUE
 	cry_reverse Cry_Hippopotas
@@ -3663,6 +3731,9 @@ gCryTable_Reverse::
 .endif @ P_FAMILY_PALKIA
 .if P_FAMILY_HEATRAN == TRUE
 	cry_reverse Cry_Heatran
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_HeatranMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_HEATRAN
 .if P_FAMILY_REGIGIGAS == TRUE
 	cry_reverse Cry_Regigigas
@@ -3679,6 +3750,9 @@ gCryTable_Reverse::
 .endif @ P_FAMILY_MANAPHY
 .if P_FAMILY_DARKRAI == TRUE
 	cry_reverse Cry_Darkrai
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_DarkraiMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_DARKRAI
 .if P_FAMILY_SHAYMIN == TRUE
 	cry_reverse Cry_ShayminLand
@@ -3949,6 +4023,9 @@ gCryTable_Reverse::
 .if P_FAMILY_GOLETT == TRUE
 	cry_reverse Cry_Golett
 	cry_reverse Cry_Golurk
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_GolurkMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_GOLETT
 .if P_FAMILY_PAWNIARD == TRUE
 	cry_reverse Cry_Pawniard
@@ -4079,6 +4156,9 @@ gCryTable_Reverse::
 .if P_FAMILY_ESPURR == TRUE
 	cry_reverse Cry_Espurr
 	cry_reverse Cry_Meowstic
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_MeowsticMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ESPURR
 .if P_FAMILY_HONEDGE == TRUE
 	cry_reverse Cry_Honedge
@@ -4212,6 +4292,9 @@ gCryTable_Reverse::
 .if P_FAMILY_CRABRAWLER == TRUE
 	cry_reverse Cry_Crabrawler
 	cry_reverse Cry_Crabominable
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_CrabominableMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CRABRAWLER
 .if P_FAMILY_ORICORIO == TRUE
 	cry_reverse Cry_OricorioBaile
@@ -4278,6 +4361,9 @@ gCryTable_Reverse::
 .if P_FAMILY_WIMPOD == TRUE
 	cry_reverse Cry_Wimpod
 	cry_reverse Cry_Golisopod
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_GolisopodMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_WIMPOD
 .if P_FAMILY_SANDYGAST == TRUE
 	cry_reverse Cry_Sandygast
@@ -4370,6 +4456,9 @@ gCryTable_Reverse::
 .endif @ P_FAMILY_NECROZMA
 .if P_FAMILY_MAGEARNA == TRUE
 	cry_reverse Cry_Magearna
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_MagearnaMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_MAGEARNA
 .if P_FAMILY_MARSHADOW == TRUE
 	cry_reverse Cry_Marshadow
@@ -4386,6 +4475,9 @@ gCryTable_Reverse::
 .endif @ P_FAMILY_BLACEPHALON
 .if P_FAMILY_ZERAORA == TRUE
 	cry_reverse Cry_Zeraora
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_ZeraoraMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_ZERAORA
 .if P_FAMILY_MELTAN == TRUE
 	cry_reverse Cry_Meltan
@@ -4681,6 +4773,9 @@ gCryTable_Reverse::
 .if P_FAMILY_CAPSAKID == TRUE
 	cry_reverse Cry_Capsakid
 	cry_reverse Cry_Scovillain
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_ScovillainMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_CAPSAKID
 .if P_FAMILY_RELLOR == TRUE
 	cry_reverse Cry_Rellor
@@ -4720,6 +4815,9 @@ gCryTable_Reverse::
 .if P_FAMILY_GLIMMET == TRUE
 	cry_reverse Cry_Glimmet
 	cry_reverse Cry_Glimmora
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_GlimmoraMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_GLIMMET
 .if P_FAMILY_GREAVARD == TRUE
 	cry_reverse Cry_Greavard
@@ -4742,6 +4840,9 @@ gCryTable_Reverse::
 	cry_reverse Cry_TatsugiriCurly
 	cry_reverse Cry_TatsugiriDroopy
 	cry_reverse Cry_TatsugiriStretchy
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_TatsugiriMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_TATSUGIRI
 .if P_FAMILY_GREAT_TUSK == TRUE
 	cry_reverse Cry_GreatTusk
@@ -4783,6 +4884,9 @@ gCryTable_Reverse::
 	cry_reverse Cry_Frigibax
 	cry_reverse Cry_Arctibax
 	cry_reverse Cry_Baxcalibur
+.if P_GEN_9_MEGA_EVOLUTIONS == TRUE
+	cry_reverse Cry_BaxcaliburMega
+.endif @ P_GEN_9_MEGA_EVOLUTIONS
 .endif @ P_FAMILY_FRIGIBAX
 .if P_FAMILY_GIMMIGHOUL == TRUE
 	cry_reverse Cry_Gimmighoul
