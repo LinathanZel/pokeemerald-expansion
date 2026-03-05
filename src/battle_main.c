@@ -3943,6 +3943,7 @@ static void TryDoEventsBeforeFirstTurn(void)
 
         memset(gQueuedStatBoosts, 0, sizeof(gQueuedStatBoosts));
         SetShellSideArmCategory();
+        // PawkkieTestFunction();
         SetAiLogicDataForTurn(gAiLogicData); // get assumed abilities, hold effects, etc of all battlers
 
         if (gBattleTypeFlags & BATTLE_TYPE_ARENA)

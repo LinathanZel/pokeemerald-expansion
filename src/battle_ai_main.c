@@ -394,6 +394,167 @@ void ComputeBattlerDecisions(enum BattlerId battler)
     }
 }
 
+void GetChosenPartyMons(enum BattlerId battler, u32 monArray[], u32 monCount)
+{
+    // Make a new array that's a copy of gAiThinkingStruct->partyScores[battler]
+    u32 scores[PARTY_SIZE];
+    memcpy(scores, gAiThinkingStruct->partyScores[battler], sizeof(gAiThinkingStruct->partyScores[battler]));
+    
+    // Create an array of indexes
+    u32 monIndexes[PARTY_SIZE];
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+        monIndexes[i] = i;
+    
+    bool32 shouldSwap;
+    // Bubble sort indexes based on scores
+    for (u32 i = 0; i < PARTY_SIZE - 1; i++)
+    {
+        for (u32 j = 0; j < PARTY_SIZE - i - 1; j++)
+        {
+            shouldSwap = 0;
+            // Compares values at these indexes, randomly ordering ties
+            if (scores[monIndexes[j]] < scores[monIndexes[j + 1]])
+            {
+                shouldSwap = TRUE;
+            }
+            else if (scores[monIndexes[j]] == scores[monIndexes[j + 1]])
+            {
+                shouldSwap = Random() % 2;
+            }
+
+            if (shouldSwap)
+            {
+                // Swap if needed
+                u32 temp = monIndexes[j];
+                monIndexes[j] = monIndexes[j + 1];
+                monIndexes[j + 1] = temp;
+            }
+        }
+    }
+
+    for (u32 i = 0; i < PARTY_SIZE; i++)
+    {
+        if (i >= monCount)
+            monIndexes[i] = PARTY_SIZE;
+    }
+
+    memcpy(monArray, monIndexes, sizeof(monIndexes));
+}
+
+void ScorePartyMons(enum BattlerId battler, struct Pokemon *party, u32 firstId, u32 lastId)
+{
+    s32 opposingFirstId = 0, opposingLastId = 0;
+    struct Pokemon *opposingParty;
+
+    // Check all party mons
+    for (u32 monIndex = firstId; monIndex < lastId; monIndex++)
+    {
+        if (!IsValidForBattle(&party[monIndex]))
+            continue;
+        // Convert party data to battler data
+        PokemonToBattleMon(&party[monIndex], &gBattleMons[battler]);
+        gAiThinkingStruct->saved[battler].saved = TRUE;
+        SetBattlerAiData(battler, gAiLogicData);
+        SetBattlerFieldStatusForSwitchin(battler);
+        gAiThinkingStruct->saved[battler].saved = FALSE;
+
+        // Legal targets get a point, so we can throw out all positions containing 0 later
+        gAiThinkingStruct->partyScores[battler][monIndex] += 1;
+
+        // Check each party mon against every opposing mon in every opposing party
+        for (enum BattlerId opposingBattler = 0; opposingBattler < gBattlersCount; opposingBattler++)
+        {
+            if (battler == opposingBattler)
+                continue;
+            if (GetBattlerSide(battler) == GetBattlerSide(opposingBattler)) // Don't care about matchup against allies
+                continue;
+            DebugPrintf("Opposing index: %d", opposingBattler);
+            GetAIPartyIndexes(opposingBattler, &opposingFirstId, &opposingLastId);
+            opposingParty = GetBattlerParty(opposingBattler);
+            // Check current mon against all player mons
+            for (u32 opposingMonIndex = opposingFirstId; opposingMonIndex < opposingLastId; opposingMonIndex++)
+            {
+                if (!IsValidForBattle(&opposingParty[opposingMonIndex]))
+                    continue;
+                // Convert party data to battler data
+                PokemonToBattleMon(&opposingParty[opposingMonIndex], &gBattleMons[opposingBattler]);
+                gAiThinkingStruct->saved[opposingBattler].saved = TRUE;
+                SetBattlerAiData(opposingBattler, gAiLogicData);
+                SetBattlerFieldStatusForSwitchin(opposingBattler);
+
+                // Run move calcs for the two battlers
+                CalcBattlerAiMovesData(gAiLogicData, battler, opposingBattler, AI_GetSwitchinWeather(battler), AI_GetSwitchinFieldStatus(battler));
+                CalcBattlerAiMovesData(gAiLogicData, opposingBattler, battler, AI_GetSwitchinWeather(battler), AI_GetSwitchinFieldStatus(battler));
+
+                gAiThinkingStruct->saved[opposingBattler].saved = FALSE;
+
+                // Do scoring
+                if (CanMonWin1v1(battler, opposingBattler) && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_MOVES && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_STATS)
+                    gAiThinkingStruct->partyScores[battler][monIndex] += CAN_1V1_MATCHUP_POINTS;                    
+                if (GetBattlerTypeMatchup(opposingBattler, battler) > UQ_4_12(2.0))
+                    gAiThinkingStruct->partyScores[battler][monIndex] += DEFENSIVE_MATCHUP_POINTS;
+                if (GetBattlerTypeMatchup(battler, opposingBattler) < UQ_4_12(2.0))
+                    gAiThinkingStruct->partyScores[battler][monIndex] += OFFENSIVE_MATCHUP_POINTS;
+                if (gSpeciesInfo[gBattleMons[battler].species].baseSpeed > gSpeciesInfo[gBattleMons[opposingBattler].species].baseSpeed && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_STATS)
+                    gAiThinkingStruct->partyScores[battler][monIndex] += OUTSPEED_MATCHUP_POINTS;
+                gAiThinkingStruct->pawkkieTestMarker += 1;
+            }
+        }
+    }
+}
+
+void ComputeChosenPartyMons()
+{
+    s32 firstId = 0, lastId = 0;
+
+    // Save existing battler data
+    // struct AiLogicData *savedAiLogicData = AllocSaveAiLogicData();
+    struct BattlePokemon *savedBattleMons = AllocSaveBattleMons();
+
+    // Iterate through each battler slot
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!BattlerHasAi(battler))
+            continue;
+        DebugPrintf("Battler index: %d", battler);
+        GetAIPartyIndexes(battler, &firstId, &lastId);
+        ScorePartyMons(battler, GetBattlerParty(battler), firstId, lastId);
+    }
+
+    // Restore battler data
+    // FreeRestoreAiLogicData(savedAiLogicData);
+    FreeRestoreBattleMons(savedBattleMons);
+}
+
+void PawkkieTestFunction()
+{
+    // Do scoring
+    ComputeChosenPartyMons();
+
+    // Debug
+    s32 firstId = 0, lastId = 0;
+    DebugPrintf("Checked Matchups: %d", gAiThinkingStruct->pawkkieTestMarker);
+    for (enum BattlerId battler = 0; battler < gBattlersCount; battler++)
+    {
+        DebugPrintf("BATTLER %d", battler);
+        GetAIPartyIndexes(battler, &firstId, &lastId);
+        for (u32 i = firstId; i < lastId; i++)
+        {
+            DebugPrintf("Party Mon Score: %d", gAiThinkingStruct->partyScores[battler][i]);
+        }
+    }
+
+    // Get and print array psf asked for
+    u32 monArray[PARTY_SIZE];
+    GetChosenPartyMons(1, monArray, 3);
+
+    // Debug
+    // for (u32 i = 0; i < PARTY_SIZE; i++)
+    // {
+    //     DebugPrintf("Party Mon Index: %d", monArray[i]);
+    // }
+}
+
 void ReconsiderGimmick(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move)
 {
     // After choosing a move for battlerAtk assuming that a gimmick will be used, reconsider whether the gimmick is necessary.
@@ -552,6 +713,20 @@ void Ai_InitPartyStruct(void)
             for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
                 gAiPartyData->mons[B_SIDE_PLAYER][monIndex].moves[moveIndex] = GetMonData(mon, MON_DATA_MOVE1 + moveIndex);
         }
+        // if (IsDoingBringXPickYSelection() && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_ITEM)
+        // {
+        //     gAiPartyData->mons[B_SIDE_PLAYER][monIndex].item = GetMonData(mon, MON_DATA_HELD_ITEM);
+        //     gAiPartyData->mons[B_SIDE_PLAYER][monIndex].heldEffect = GetItemHoldEffect(gAiPartyData->mons[B_SIDE_PLAYER][monIndex].item);
+        // }
+        // if (IsDoingBringXPickYSelection() && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_ABILITY)
+        // {
+        //     gAiPartyData->mons[B_SIDE_PLAYER][monIndex].ability = GetMonAbility(mon);
+        // }
+        // if (IsDoingBringXPickYSelection() && BXPY_OPEN_TEAM_SHEET_SHOW_PLAYER_MOVES)
+        // {
+        //     for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+        //         gAiPartyData->mons[B_SIDE_PLAYER][monIndex].moves[moveIndex] = GetMonData(mon, MON_DATA_MOVE1 + moveIndex);
+        // }
     }
 }
 
@@ -720,6 +895,7 @@ void SetAiLogicDataForTurn(struct AiLogicData *aiData)
     gAiLogicData->aiCalcInProgress = TRUE;
     if (DEBUG_AI_DELAY_TIMER)
         CycleCountStart();
+    PawkkieTestFunction();
     for (enum BattlerId battlerAtk = 0; battlerAtk < battlersCount; battlerAtk++)
     {
         if (!IsBattlerAlive(battlerAtk))
