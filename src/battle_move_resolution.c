@@ -3042,6 +3042,11 @@ static enum MoveEndResult MoveEndUpdateLastMoves(struct BattleCalcValues *cv)
         }
         else
         {
+            if (!gSpecialStatuses[cv->battlerAtk].dancerUsedMove
+                && !gBattleMons[cv->battlerAtk].volatiles.flinched)
+            {
+                gLastMoves[cv->battlerAtk] = gChosenMove;
+            }
             gLastResultingMoves[cv->battlerAtk] = MOVE_UNAVAILABLE;
             gLastUsedMoveType[cv->battlerAtk] = 0;
         }

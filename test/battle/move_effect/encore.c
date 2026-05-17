@@ -274,3 +274,51 @@ DOUBLE_BATTLE_TEST("Encore allows choosing an opponent target (Gen 5+)")
         HP_BAR(opponentRight);
     }
 }
+
+SINGLE_BATTLE_TEST("Encore fails if the target's last move was Dynamax Cannon")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_DYNAMAX_CANNON); MOVE(opponent, MOVE_ENCORE); }
+        TURN { MOVE(player, MOVE_EMBER); }
+    } SCENE {
+        MESSAGE("Wobbuffet used Dynamax Cannon!");
+        MESSAGE("The opposing Wobbuffet used Encore!");
+        MESSAGE("But it failed!");
+        MESSAGE("Wobbuffet used Ember!");
+    }
+}
+
+DOUBLE_BATTLE_TEST("Encore works if the target's last move failed")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        PLAYER(SPECIES_WYNAUT);
+        OPPONENT(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WYNAUT);
+    } WHEN {
+        TURN {
+            MOVE(opponentLeft, MOVE_SUCKER_PUNCH, target: playerRight);
+            MOVE(opponentRight, MOVE_SUCKER_PUNCH, target: playerLeft);
+            MOVE(playerRight, MOVE_FOLLOW_ME);
+            MOVE(playerLeft, MOVE_ENCORE, target: opponentLeft);
+        }
+        TURN {
+            MOVE(opponentLeft, MOVE_SUCKER_PUNCH, target: playerRight);
+            MOVE(opponentRight, MOVE_CELEBRATE, target: playerLeft);
+            MOVE(playerRight, MOVE_SCRATCH, target: opponentLeft);
+            MOVE(playerLeft, MOVE_CELEBRATE);
+        }
+    } SCENE {
+        MESSAGE("Wynaut used Follow Me!");
+        MESSAGE("The opposing Wobbuffet used Sucker Punch!");
+        MESSAGE("But it failed!");
+        MESSAGE("The opposing Wynaut used Sucker Punch!");
+        MESSAGE("But it failed!");
+        MESSAGE("Wobbuffet used Encore!");
+        MESSAGE("The opposing Wobbuffet must do an encore!");
+        MESSAGE("The opposing Wobbuffet used Sucker Punch!");
+    }
+}
